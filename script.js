@@ -16,6 +16,8 @@ const notes = [
     {note: 'C', frequency: 523.25, key: 'k'} 
 ]
 
+const currentKeys = [];
+
 notes.forEach(({note, frequency, key}) => {
     const noteKey = document.createElement('button');
     noteKey.innerText = note;
@@ -34,19 +36,19 @@ notes.forEach(({note, frequency, key}) => {
     })
 
     window.addEventListener('keydown', (e) => {
-        console.log(e);
         if (e.key !== key) return;
+        if (currentKeys.includes(e.key)) return;
+        currentKeys.push(key);
+        console.log(currentKeys)
         const oscillator = audioContext.createOscillator();
         oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
         // oscillator.type = 'sawtooth';
         oscillator.connect(audioContext.destination);
         oscillator.start();
-        noteKey.addEventListener('mouseup', () => {
-            oscillator.stop()
-        });
-        window.addEventListener('keyup', () => {
+        window.addEventListener('keyup', (e) => {
             if (e.key !== key) return;
             oscillator.stop()
+            currentKeys.splice(currentKeys.indexOf(key))
         });
     })
 
