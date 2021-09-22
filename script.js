@@ -15,18 +15,24 @@ const notes = [
     {note: 'B', frequency: 493.88, key: 'j'},
     {note: 'C', frequency: 523.25, key: 'k'} 
 ]
-
+// Holds keys that are currently held down
 const currentKeys = [];
 
+//  Build note buttons
 notes.forEach(({note, frequency, key}) => {
     const noteKey = document.createElement('button');
     noteKey.innerText = note;
+
+
+    // mouse event listener
     noteKey.addEventListener('mousedown', () => {
+        // create oscillator and set params
         const oscillator = audioContext.createOscillator();
         oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
         // oscillator.type = 'sawtooth';
         oscillator.connect(audioContext.destination);
         oscillator.start();
+        //  event listeners to stop
         noteKey.addEventListener('mouseup', () => {
             oscillator.stop()
         });
@@ -35,23 +41,28 @@ notes.forEach(({note, frequency, key}) => {
         });
     })
 
+    // keyboard event listener
     window.addEventListener('keydown', (e) => {
+        // check if button pressed corresponds to a note key
         if (e.key !== key) return;
+        // check if key is already pressed to avoid firing the event listener on a loop
         if (currentKeys.includes(e.key)) return;
+        // add key to prevent current keys for check above
         currentKeys.push(key);
-        console.log(currentKeys)
+
+        // create oscillator and set values
         const oscillator = audioContext.createOscillator();
         oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
         // oscillator.type = 'sawtooth';
         oscillator.connect(audioContext.destination);
         oscillator.start();
+        // end on keyup
         window.addEventListener('keyup', (e) => {
             if (e.key !== key) return;
             oscillator.stop()
+            //  remove from current keys
             currentKeys.splice(currentKeys.indexOf(key))
         });
     })
-
     document.body.appendChild(noteKey)
-
 })
