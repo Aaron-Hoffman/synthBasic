@@ -8,10 +8,40 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
 
+html {
+    font-size: 125%;
+}
+
+h1 {
+    text-align: center;
+    padding: 50px 0;
+    font-size: 3rem;
+}
+
+.keyboard {
+    height: 300px;
+    width: 640px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.whiteKey,
+.blackKey {
+    height: 100%;
+}
+
 .whiteKey {
     background-color: ivory;
+    height: 100%;
+    width: 80px;
 }
 
 .blackKey {
     background-color: black;
+    height: 70%;
+    width: 50px;
+    position: absolute;
+    transform: translateX(-25px);
+    color: white;
 }
+

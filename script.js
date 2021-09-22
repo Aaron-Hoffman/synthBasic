@@ -15,21 +15,52 @@ const notes = [
     {note: 'B', frequency: 493.88, key: 'j'},
     {note: 'C', frequency: 523.25, key: 'k'} 
 ]
+
+const waveforms = ['sine', 'square', 'sawtooth', 'triangle']
 // Holds keys that are currently held down
 const currentKeys = [];
+
+const keyboard = document.querySelector('.keyboard');
+const waveformInput = document.querySelector('#waveform');
+let waveform = waveformInput.value;
+
+waveformInput.addEventListener('change', () => waveform = waveformInput.value);
 
 //  Build note buttons
 notes.forEach(({note, frequency, key}) => {
     const noteKey = document.createElement('button');
-    noteKey.innerText = note;
-
+    noteKey.innerHTML = `<span>${key}</span>`;
+    if (note.includes('#')) {
+        noteKey.classList.add('blackKey');
+    } else {
+        noteKey.classList.add('whiteKey');
+    }
 
     // mouse event listener
     noteKey.addEventListener('mousedown', () => {
         // create oscillator and set params
         const oscillator = audioContext.createOscillator();
         oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-        // oscillator.type = 'sawtooth';
+        oscillator.type = waveforms[waveform];
+        oscillator.connect(audioContext.destination);
+        oscillator.start();
+        //  event listeners to stop
+        noteKey.addEventListener('mouseup', () => {
+            oscillator.stop()
+        });
+        noteKey.addEventListener('mouseout', () => {
+            oscillator.stop()
+        });
+    })
+
+    // mouse over event listener
+    noteKey.addEventListener('mouseover', (e) => {
+        // check if mouse button is clicked
+        if (e.buttons === 0) return;
+        // create oscillator and set params
+        const oscillator = audioContext.createOscillator();
+        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+        oscillator.type = waveforms[waveform];
         oscillator.connect(audioContext.destination);
         oscillator.start();
         //  event listeners to stop
@@ -53,7 +84,7 @@ notes.forEach(({note, frequency, key}) => {
         // create oscillator and set values
         const oscillator = audioContext.createOscillator();
         oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-        // oscillator.type = 'sawtooth';
+        oscillator.type = waveforms[waveform];
         oscillator.connect(audioContext.destination);
         oscillator.start();
         // end on keyup
@@ -64,5 +95,5 @@ notes.forEach(({note, frequency, key}) => {
             currentKeys.splice(currentKeys.indexOf(key))
         });
     })
-    document.body.appendChild(noteKey)
+    keyboard.appendChild(noteKey)
 })
