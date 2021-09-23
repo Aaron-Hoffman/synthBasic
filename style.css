@@ -12,6 +12,14 @@ html {
     font-size: 125%;
 }
 
+h1, 
+p,
+label,
+span {
+    font-family: 'Fira Mono', monospace;
+}
+
+
 h1 {
     text-align: center;
     padding: 50px 0;
@@ -22,14 +30,15 @@ label,
 p {
     color: palegoldenrod;
     margin: 0;
-    line-height: 5px;
+    line-height: 7.5px;
+    font-size: 0.8rem;
 }
 
 input[type="range"] {
     -webkit-appearance: slider-vertical;
     /* appearance: none; */
     width: 10px;
-    height: 200px;
+    height: 100px;
     margin-bottom: 30px;
     border-radius: 10px;
 }
@@ -73,7 +82,7 @@ input::-moz-range-thumb {
 }
 
 .sliderTicks {
-    height: 195px;
+    height: 95px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -92,12 +101,12 @@ input::-moz-range-thumb {
     height: 300px;
     width: 640px;
     position: relative;
-    margin: 0 auto;
+    margin: 0 auto 100px;
 }
 
 .whiteKey,
 .blackKey {
-    height: 100%;
+    border-radius: 0 0 5px 5px;
 }
 
 .whiteKey {

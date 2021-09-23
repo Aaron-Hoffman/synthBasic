@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="style.css">
     <title>SYNTHESIZER</title>
 </head>
@@ -14,9 +17,22 @@
     <main>
         <div class="params">
             <div class="sliderTicks left">
-                <p>-</p>
-                <p>-</p>
-                <p>-</p>
+                <p><!-- Triangle -->
+                    <svg width="10" height="10">
+                        <line x1="0" y1="10" x2="5" y2='0' stroke="palegoldenrod"></line>
+                        <line x1="5" y1="0" x2="10" y2='10' stroke="palegoldenrod"></line>
+                    </svg>  -</p>
+                <p><!-- Sawtooth -->
+                    <svg width="10" height="10">
+                        <line x1="0" y1="10" x2="10" y2='0' stroke="palegoldenrod"></line>
+                        <line x1="10" y1="0" x2="10" y2='10' stroke="palegoldenrod"></line>
+                    </svg>  -</p>
+                <p><!-- Square -->
+                    <svg width="10" height="10">
+                        <line x1="0" y1="10" x2="0" y2='0' stroke="palegoldenrod"></line>
+                        <line x1="0" y1="0" x2="10" y2='0' stroke="palegoldenrod"></line>
+                        <line x1="10" y1="0" x2="10" y2='10' stroke="palegoldenrod"></line>
+                    </svg>  -</p>
                 <p>-</p>
             </div>
             <div class="slider">
@@ -31,6 +47,22 @@
                     <p>-</p>
                 </div>
             </div>
+            <!-- Sawtooth -->
+            <svg width="10" height="10">
+                <line x1="0" y1="10" x2="10" y2='0' stroke="palegoldenrod"></line>
+                <line x1="10" y1="0" x2="10" y2='10' stroke="palegoldenrod"></line>
+            </svg>
+            <!-- Square -->
+            <svg width="10" height="10">
+                <line x1="0" y1="10" x2="0" y2='0' stroke="palegoldenrod"></line>
+                <line x1="0" y1="0" x2="10" y2='0' stroke="palegoldenrod"></line>
+                <line x1="10" y1="0" x2="10" y2='10' stroke="palegoldenrod"></line>
+            </svg>
+            <!-- Triangle -->
+            <svg width="10" height="10">
+                <line x1="0" y1="10" x2="5" y2='0' stroke="palegoldenrod"></line>
+                <line x1="5" y1="0" x2="10" y2='10' stroke="palegoldenrod"></line>
+            </svg>
             <!-- <datalist id="waves">
                 <option value="0" label="sine"></option>
                 <option value="1" label="square"></option>
