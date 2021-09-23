@@ -22,22 +22,38 @@ label,
 p {
     color: palegoldenrod;
     margin: 0;
+    line-height: 5px;
 }
 
 input[type="range"] {
     -webkit-appearance: slider-vertical;
     /* appearance: none; */
-    font-size: 2rem;
-    width: 100px;
+    width: 10px;
     height: 200px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+input::-moz-range-track {
+    background-color: black;
+    width: 10px;
+}
+
+input::-moz-range-progres {
+}
+
+input::-moz-range-thumb {
+    background-color: black;
+    border:1px solid palegoldenrod;
+    height: 10px;
+    width: 20px;
+    border-radius: 0;
 }
 
 .params {
     width: 640px;
     margin: 0 auto;
     padding: 30px 0;
-    background-color: #222;
+    background-color: #333;
     display: flex;
     padding: 40px;
 }
@@ -49,10 +65,11 @@ input[type="range"] {
 .sliderLabel {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .sliderTicks {
-    height: 200px;
+    height: 195px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -60,11 +77,11 @@ input[type="range"] {
 }
 
 .left {
-    left: 30px;
+    left: 20px;
 }
 
 .right {
-    right: 30px;
+    right: 20px;
 }
 
 .keyboard {
