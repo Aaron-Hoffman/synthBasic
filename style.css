@@ -18,12 +18,19 @@ h1 {
     font-size: 3rem;
 }
 
+label,
+p {
+    color: palegoldenrod;
+    margin: 0;
+}
+
 input[type="range"] {
     -webkit-appearance: slider-vertical;
     /* appearance: none; */
     font-size: 2rem;
     width: 100px;
     height: 200px;
+    margin-bottom: 20px;
 }
 
 .params {
@@ -31,6 +38,33 @@ input[type="range"] {
     margin: 0 auto;
     padding: 30px 0;
     background-color: #222;
+    display: flex;
+    padding: 40px;
+}
+
+.slider {
+    display: flex;
+}
+
+.sliderLabel {
+    display: flex;
+    flex-direction: column;
+}
+
+.sliderTicks {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.left {
+    left: 30px;
+}
+
+.right {
+    right: 30px;
 }
 
 .keyboard {

@@ -13,9 +13,23 @@
     </header>
     <main>
         <div class="params">
+            <div class="sliderTicks left">
+                <p>-</p>
+                <p>-</p>
+                <p>-</p>
+                <p>-</p>
+            </div>
             <div class="slider">
-                <label for="waveform">Waveform</label>
-                <input id="waveform"type="range" min=0 max=3 step="1" list="waves" orient="vertical">
+                <div class="sliderLabel">
+                    <input id="waveform"type="range" min=0 max=3 step="1" list="waves" orient="vertical">
+                    <label for="waveform">Waveform</label>
+                </div>
+                <div class="sliderTicks right">
+                    <p>-</p>
+                    <p>-</p>
+                    <p>-</p>
+                    <p>-</p>
+                </div>
             </div>
             <!-- <datalist id="waves">
                 <option value="0" label="sine"></option>
@@ -23,7 +37,7 @@
                 <option value="2" label="sawtooth"></option>
                 <option value="3" label="triangle"></option>
             </datalist> -->
-            <input id="waveform"type="range" min=0 max=3 step="1" orient="vertical">
+        
         </div>
         <div class="keyboard">
 
