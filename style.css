@@ -19,16 +19,18 @@ h1 {
 }
 
 input[type="range"] {
-    /* -webkit-appearance: none; */
+    -webkit-appearance: slider-vertical;
     /* appearance: none; */
     font-size: 2rem;
-    width: 150px;
+    width: 100px;
+    height: 200px;
 }
 
 .params {
     width: 640px;
     margin: 0 auto;
     padding: 30px 0;
+    background-color: #222;
 }
 
 .keyboard {

@@ -13,14 +13,17 @@
     </header>
     <main>
         <div class="params">
-            <input id="waveform"type="range" min=0 max=3 step="1" list="waves">
+            <div class="slider">
+                <label for="waveform">Waveform</label>
+                <input id="waveform"type="range" min=0 max=3 step="1" list="waves" orient="vertical">
+            </div>
             <!-- <datalist id="waves">
                 <option value="0" label="sine"></option>
                 <option value="1" label="square"></option>
                 <option value="2" label="sawtooth"></option>
                 <option value="3" label="triangle"></option>
             </datalist> -->
-            <input id="waveform"type="range" min=0 max=3 step="1">
+            <input id="waveform"type="range" min=0 max=3 step="1" orient="vertical">
         </div>
         <div class="keyboard">
 
