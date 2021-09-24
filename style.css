@@ -112,13 +112,13 @@ input::-moz-range-thumb {
 }
 
 .whiteKey {
-    background-color: ivory;
+    background: radial-gradient(ivory, rgb(255, 255, 207));
     height: 100%;
     width: 80px;
 }
 
 .blackKey {
-    background-color: black;
+    background: radial-gradient(#333, #000);
     height: 70%;
     width: 50px;
     position: absolute;
