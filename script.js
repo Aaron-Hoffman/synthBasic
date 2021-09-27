@@ -34,6 +34,7 @@ synth.createOscillator = (frequency) => {
         oscillator.type = synth.waveforms[synth.waveform];
         oscillator.connect(synth.audioContext.destination);
         oscillator.start();
+        return oscillator;
 }
 
 //  Build note buttons
@@ -50,7 +51,7 @@ synth.notes.forEach(({note, frequency, key}) => {
     // mouse event listener
     noteKey.addEventListener('mousedown', () => {
         // create oscillator and set params
-        synth.createOscillator(frequency);
+        const oscillator = synth.createOscillator(frequency);
         //  event listeners to stop
         noteKey.addEventListener('mouseup', () => {
             oscillator.stop()
@@ -65,7 +66,7 @@ synth.notes.forEach(({note, frequency, key}) => {
         // check if mouse button is clicked
         if (e.buttons === 0) return;
         // create oscillator and set params
-        synth.createOscillator(frequency);
+        const oscillator = synth.createOscillator(frequency);
         //  event listeners to stop
         noteKey.addEventListener('mouseup', () => {
             oscillator.stop()
@@ -85,7 +86,7 @@ synth.notes.forEach(({note, frequency, key}) => {
         synth.currentKeys.push(key);
 
         // create oscillator and set values
-        synth.createOscillator(frequency);
+        const oscillator = synth.createOscillator(frequency);
         // end on keyup
         window.addEventListener('keyup', (e) => {
             if (e.key !== key) return;
