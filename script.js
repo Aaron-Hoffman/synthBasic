@@ -23,16 +23,31 @@ synth.waveforms = ['sine', 'square', 'sawtooth', 'triangle']
 synth.currentKeys = [];
 
 synth.keyboard = document.querySelector('.keyboard');
+
+//  Sliders
+//  Waveform
 synth.waveformInput = document.querySelector('#waveform');
 synth.waveform = synth.waveformInput.value;
-
 synth.waveformInput.addEventListener('change', () => synth.waveform = synth.waveformInput.value);
+//  Volume
+synth.volumeSlider = document.querySelector('#volume');
+synth.volume = synth.volumeSlider.value;
+synth.volumeSlider.addEventListener('input', () => {
+    synth.volume = synth.volumeSlider.value
+    console.log(synth.volume);
+    synth.gainNode.gain.linearRampToValueAtTime(synth.volume, synth.audioContext.currentTime + 0.1)
+})
+
+
+synth.gainNode = synth.audioContext.createGain();
+synth.gainNode.connect(synth.audioContext.destination);
+synth.gainNode.gain.setValueAtTime(synth.volume, synth.audioContext.currentTime);
 
 synth.createOscillator = (frequency) => {
     const oscillator = synth.audioContext.createOscillator();
         oscillator.frequency.setValueAtTime(frequency, synth.audioContext.currentTime);
         oscillator.type = synth.waveforms[synth.waveform];
-        oscillator.connect(synth.audioContext.destination);
+        oscillator.connect(synth.gainNode);
         oscillator.start();
         return oscillator;
 }
@@ -79,17 +94,17 @@ synth.notes.forEach(({note, frequency, key}) => {
     // keyboard event listener
     window.addEventListener('keydown', (e) => {
         // check if button pressed corresponds to a note key
-        if (e.key !== key) return;
+        if (e.key.toLowerCase() !== key) return;
         // check if key is already pressed to avoid firing the event listener on a loop
-        if (synth.currentKeys.includes(e.key)) return;
+        if (synth.currentKeys.includes(e.key.toLowerCase())) return;
         // add key to prevent current keys for check above
-        synth.currentKeys.push(key);
+        synth.currentKeys.push(key.toLowerCase());
 
         // create oscillator and set values
         const oscillator = synth.createOscillator(frequency);
         // end on keyup
         window.addEventListener('keyup', (e) => {
-            if (e.key !== key) return;
+            if (e.key.toLowerCase() !== key) return;
             oscillator.stop()
             //  remove from current keys
             synth.currentKeys.splice(synth.currentKeys.indexOf(key))

@@ -16,6 +16,8 @@
     </header>
     <main>
         <div class="params">
+
+            <!-- WAVEFORM SELECTOR -->
             <div class="sliderTicks left">
                 <p><!-- Triangle -->
                     <svg width="10" height="10">
@@ -43,12 +45,34 @@
                     <input id="waveform"type="range" min=0 max=3 step="1" list="waves" orient="vertical" value="0">
                     <label for="waveform">Waveform</label>
                 </div>
+                </div>
                 <div class="sliderTicks right">
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                 </div>
+                
+                <!-- VOLUME SLIDER -->
+                <div class="sliderTicks left">
+                    <p>-</p>
+                    <p>-</p>
+                    <p>-</p>
+                    <p>-</p>
+                </div>
+                <div class="slider">
+                    <div class="sliderLabel">
+                        <input id="volume"type="range" min=0 max=1 step="0.01" orient="vertical" value="0.5">
+                        <label for="volume">Volume</label>
+                    </div>
+                    </div>
+                    <div class="sliderTicks right">
+                        <p>-</p>
+                        <p>-</p>
+                        <p>-</p>
+                        <p>-</p>
+                    </div>
+
             </div>
             
             <!-- <datalist id="waves">
