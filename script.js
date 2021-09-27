@@ -1,6 +1,8 @@
-const audioContext = new AudioContext();
+const synth = {};
 
-const notes = [
+synth.audioContext = new AudioContext();
+
+synth.notes = [
     {note: 'C', frequency: 261.63, key: 'a'},
     {note: 'C#', frequency: 277.18, key: 'w'},
     {note: 'D', frequency: 293.66, key: 's'},
@@ -16,20 +18,29 @@ const notes = [
     {note: 'C', frequency: 523.25, key: 'k'} 
 ]
 
-const waveforms = ['sine', 'square', 'sawtooth', 'triangle']
+synth.waveforms = ['sine', 'square', 'sawtooth', 'triangle']
 // Holds keys that are currently held down
-const currentKeys = [];
+synth.currentKeys = [];
 
-const keyboard = document.querySelector('.keyboard');
-const waveformInput = document.querySelector('#waveform');
-let waveform = waveformInput.value;
+synth.keyboard = document.querySelector('.keyboard');
+synth.waveformInput = document.querySelector('#waveform');
+synth.waveform = synth.waveformInput.value;
 
-waveformInput.addEventListener('change', () => waveform = waveformInput.value);
+synth.waveformInput.addEventListener('change', () => synth.waveform = synth.waveformInput.value);
+
+synth.createOscillator = (frequency) => {
+    const oscillator = synth.audioContext.createOscillator();
+        oscillator.frequency.setValueAtTime(frequency, synth.audioContext.currentTime);
+        oscillator.type = synth.waveforms[synth.waveform];
+        oscillator.connect(synth.audioContext.destination);
+        oscillator.start();
+}
 
 //  Build note buttons
-notes.forEach(({note, frequency, key}) => {
+synth.notes.forEach(({note, frequency, key}) => {
     const noteKey = document.createElement('button');
     noteKey.innerHTML = `<span>${key}</span>`;
+
     if (note.includes('#')) {
         noteKey.classList.add('blackKey');
     } else {
@@ -39,11 +50,7 @@ notes.forEach(({note, frequency, key}) => {
     // mouse event listener
     noteKey.addEventListener('mousedown', () => {
         // create oscillator and set params
-        const oscillator = audioContext.createOscillator();
-        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-        oscillator.type = waveforms[waveform];
-        oscillator.connect(audioContext.destination);
-        oscillator.start();
+        synth.createOscillator(frequency);
         //  event listeners to stop
         noteKey.addEventListener('mouseup', () => {
             oscillator.stop()
@@ -58,11 +65,7 @@ notes.forEach(({note, frequency, key}) => {
         // check if mouse button is clicked
         if (e.buttons === 0) return;
         // create oscillator and set params
-        const oscillator = audioContext.createOscillator();
-        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-        oscillator.type = waveforms[waveform];
-        oscillator.connect(audioContext.destination);
-        oscillator.start();
+        synth.createOscillator(frequency);
         //  event listeners to stop
         noteKey.addEventListener('mouseup', () => {
             oscillator.stop()
@@ -77,23 +80,20 @@ notes.forEach(({note, frequency, key}) => {
         // check if button pressed corresponds to a note key
         if (e.key !== key) return;
         // check if key is already pressed to avoid firing the event listener on a loop
-        if (currentKeys.includes(e.key)) return;
+        if (synth.currentKeys.includes(e.key)) return;
         // add key to prevent current keys for check above
-        currentKeys.push(key);
+        synth.currentKeys.push(key);
 
         // create oscillator and set values
-        const oscillator = audioContext.createOscillator();
-        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-        oscillator.type = waveforms[waveform];
-        oscillator.connect(audioContext.destination);
-        oscillator.start();
+        synth.createOscillator(frequency);
         // end on keyup
         window.addEventListener('keyup', (e) => {
             if (e.key !== key) return;
             oscillator.stop()
             //  remove from current keys
-            currentKeys.splice(currentKeys.indexOf(key))
+            synth.currentKeys.splice(synth.currentKeys.indexOf(key))
         });
     })
-    keyboard.appendChild(noteKey)
+    // Add key to the page
+    synth.keyboard.appendChild(noteKey);
 })
