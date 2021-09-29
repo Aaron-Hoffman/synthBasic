@@ -33,21 +33,37 @@ synth.waveformInput.addEventListener('change', () => synth.waveform = synth.wave
 synth.volumeSlider = document.querySelector('#volume');
 synth.volume = synth.volumeSlider.value;
 synth.volumeSlider.addEventListener('input', () => {
-    synth.volume = synth.volumeSlider.value
-    console.log(synth.volume);
+    synth.volume = synth.volumeSlider.value;
     synth.gainNode.gain.linearRampToValueAtTime(synth.volume, synth.audioContext.currentTime + 0.1)
 })
+// Filter 
+synth.filterSlider = document.querySelector('#filter');
+synth.filterFrequency = synth.filterSlider.value;
+synth.filterSlider.addEventListener('input', () => {
+    synth.filterFrequency = synth.filterSlider.value;
+    synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency, synth.audioContext.currentTime + 0.1)
+})
 
-
+// Parameter nodes
 synth.gainNode = synth.audioContext.createGain();
-synth.gainNode.connect(synth.audioContext.destination);
-synth.gainNode.gain.setValueAtTime(synth.volume, synth.audioContext.currentTime);
+synth.filterNode = synth.audioContext.createBiquadFilter();
 
+// Connect Nodes
+synth.gainNode.connect(synth.audioContext.destination);
+synth.filterNode.connect(synth.gainNode);
+
+// Set initial values
+synth.gainNode.gain.setValueAtTime(synth.volume, synth.audioContext.currentTime);
+// Filter
+synth.filterNode.type = 'lowpass';
+synth.filterNode.frequency.setValueAtTime(1000, synth.audioContext.currentTime)
+
+// Creates oscillators on key press
 synth.createOscillator = (frequency) => {
     const oscillator = synth.audioContext.createOscillator();
         oscillator.frequency.setValueAtTime(frequency, synth.audioContext.currentTime);
         oscillator.type = synth.waveforms[synth.waveform];
-        oscillator.connect(synth.gainNode);
+        oscillator.connect(synth.filterNode);
         oscillator.start();
         return oscillator;
 }
