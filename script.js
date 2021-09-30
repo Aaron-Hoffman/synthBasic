@@ -46,27 +46,25 @@ synth.filterSlider.addEventListener('input', () => {
     synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency, synth.audioContext.currentTime + 0.1)
 })
 // LFO 
-synth.getLfoValue = () => {
-    return synth.volume * synth.lfoDepth;
-}
 
 synth.runLfo = () => {
+    const speed = 1.01 - synth.lfoSpeed;
     switch (synth.lfoType) {
         case 'volume':
             synth.currentInterval = setInterval(() => {
-                synth.gainNode.gain.linearRampToValueAtTime(synth.volume - (synth.volume * synth.lfoDepth), synth.audioContext.currentTime + 0.1)
+                synth.gainNode.gain.linearRampToValueAtTime(synth.volume - (synth.volume * synth.lfoDepth), synth.audioContext.currentTime + speed)
                 setTimeout(() => {
-                    synth.gainNode.gain.linearRampToValueAtTime(synth.volume, synth.audioContext.currentTime + 0.1)
-                }, 100)
-            },200);
+                    synth.gainNode.gain.linearRampToValueAtTime(synth.volume, synth.audioContext.currentTime + speed)
+                }, speed * 1000)
+            }, speed * 2000)
             break;
         case 'filter':
             synth.currentInterval = setInterval(() => {
-                synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency - (synth.filterFrequency * synth.lfoDepth), synth.audioContext.currentTime + 0.1)
+                synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency - (synth.filterFrequency * synth.lfoDepth), synth.audioContext.currentTime + speed)
                 setTimeout(() => {
-                    synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency, synth.audioContext.currentTime + 0.1)
-                }, 100)
-            },200);
+                    synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency, synth.audioContext.currentTime + speed)
+                }, speed * 1000)
+            }, speed * 2000);
             break;
             // case 'frequency':
             //     synth.currentInterval = setInterval(() => {
@@ -105,10 +103,10 @@ synth.depthSlider.addEventListener('input', () => {
 })
 // Speed
 synth.speedSlider = document.querySelector('#speed');
-synth.lfospeed = synth.speedSlider.value;
+synth.lfoSpeed = synth.speedSlider.value;
 synth.speedSlider.addEventListener('input', () => {
     clearInterval(synth.currentInterval);
-    synth.lfospeed = synth.speedSlider.value;
+    synth.lfoSpeed = synth.speedSlider.value;
     if (synth.lfoType) {
         synth.runLfo();
     }
