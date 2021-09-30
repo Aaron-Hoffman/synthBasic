@@ -19,7 +19,7 @@ synth.notes = [
 ]
 
 synth.waveforms = ['sine', 'square', 'sawtooth', 'triangle']
-synth.lfoOptions = [null, 'gainNode', 'filterNode', 'frequency'];
+synth.lfoOptions = [null, 'volume', 'filter', 'frequency'];
 // Holds keys that are currently held down
 synth.currentKeys = [];
 synth.currentInterval;
@@ -46,16 +46,42 @@ synth.filterSlider.addEventListener('input', () => {
     synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency, synth.audioContext.currentTime + 0.1)
 })
 // LFO 
+synth.getLfoValue = () => {
+    return synth.volume * synth.lfoDepth;
+}
 
 synth.runLfo = () => {
-    synth.currentInterval = setInterval(() => {
-        synth.gainNode.gain.linearRampToValueAtTime(0.1, synth.audioContext.currentTime + 0.1)
-        setTimeout(() => {
-            synth.gainNode.gain.linearRampToValueAtTime(synth.volume, synth.audioContext.currentTime + 0.1)
-        }, 100)
-    },200);
-    // synth.lfoSelector.addEventListener('input', () => clearInterval(currentInterval))
+    switch (synth.lfoType) {
+        case 'volume':
+            synth.currentInterval = setInterval(() => {
+                synth.gainNode.gain.linearRampToValueAtTime(synth.volume - (synth.volume * synth.lfoDepth), synth.audioContext.currentTime + 0.1)
+                setTimeout(() => {
+                    synth.gainNode.gain.linearRampToValueAtTime(synth.volume, synth.audioContext.currentTime + 0.1)
+                }, 100)
+            },200);
+            break;
+        case 'filter':
+            synth.currentInterval = setInterval(() => {
+                synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency - (synth.filterFrequency * synth.lfoDepth), synth.audioContext.currentTime + 0.1)
+                setTimeout(() => {
+                    synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency, synth.audioContext.currentTime + 0.1)
+                }, 100)
+            },200);
+            break;
+            // case 'frequency':
+            //     synth.currentInterval = setInterval(() => {
+            //         synth.frequency.linearRampToValueAtTime(synth.frequency - (synth.volume * synth.lfoDepth), synth.audioContext.currentTime + 0.1)
+            //         setTimeout(() => {
+            //             synth.gainNode.gain.linearRampToValueAtTime(synth.volume, synth.audioContext.currentTime + 0.1)
+            //         }, 100)
+            //     },200);
+        default:
+            break;
+    }
 }
+
+
+    // synth.lfoSelector.addEventListener('input', () => clearInterval(currentInterval))
 
 // LFO Selector 
 synth.lfoSelector = document.querySelector('#lfo');
@@ -63,6 +89,26 @@ synth.lfoType = synth.lfoOptions[synth.lfoSelector.value];
 synth.lfoSelector.addEventListener('input', () => {
     clearInterval(synth.currentInterval);
     synth.lfoType = synth.lfoOptions[synth.lfoSelector.value];
+    if (synth.lfoType) {
+        synth.runLfo();
+    }
+})
+// Depth 
+synth.depthSlider = document.querySelector('#depth');
+synth.lfoDepth = synth.depthSlider.value;
+synth.depthSlider.addEventListener('input', () => {
+    clearInterval(synth.currentInterval);
+    synth.lfoDepth = synth.depthSlider.value;
+    if (synth.lfoType) {
+        synth.runLfo();
+    }
+})
+// Speed
+synth.speedSlider = document.querySelector('#speed');
+synth.lfospeed = synth.speedSlider.value;
+synth.speedSlider.addEventListener('input', () => {
+    clearInterval(synth.currentInterval);
+    synth.lfospeed = synth.speedSlider.value;
     if (synth.lfoType) {
         synth.runLfo();
     }
