@@ -19,8 +19,10 @@ synth.notes = [
 ]
 
 synth.waveforms = ['sine', 'square', 'sawtooth', 'triangle']
+synth.lfoOptions = [null, 'gainNode', 'filterNode', 'frequency'];
 // Holds keys that are currently held down
 synth.currentKeys = [];
+synth.currentInterval;
 
 synth.keyboard = document.querySelector('.keyboard');
 
@@ -42,6 +44,28 @@ synth.filterFrequency = synth.filterSlider.value;
 synth.filterSlider.addEventListener('input', () => {
     synth.filterFrequency = synth.filterSlider.value;
     synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency, synth.audioContext.currentTime + 0.1)
+})
+// LFO 
+
+synth.runLfo = () => {
+    synth.currentInterval = setInterval(() => {
+        synth.gainNode.gain.linearRampToValueAtTime(0.1, synth.audioContext.currentTime + 0.1)
+        setTimeout(() => {
+            synth.gainNode.gain.linearRampToValueAtTime(synth.volume, synth.audioContext.currentTime + 0.1)
+        }, 100)
+    },200);
+    // synth.lfoSelector.addEventListener('input', () => clearInterval(currentInterval))
+}
+
+// LFO Selector 
+synth.lfoSelector = document.querySelector('#lfo');
+synth.lfoType = synth.lfoOptions[synth.lfoSelector.value];
+synth.lfoSelector.addEventListener('input', () => {
+    clearInterval(synth.currentInterval);
+    synth.lfoType = synth.lfoOptions[synth.lfoSelector.value];
+    if (synth.lfoType) {
+        synth.runLfo();
+    }
 })
 
 // Parameter nodes
