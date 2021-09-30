@@ -18,6 +18,7 @@
         <div class="params">
 
             <!-- WAVEFORM SELECTOR -->
+            <div class="slider">
             <div class="sliderTicks left">
                 <p><!-- Triangle -->
                     <svg width="10" height="10">
@@ -40,11 +41,9 @@
                     <path d="M 5 5 C 5 10, 10 10, 10 5" stroke="palegoldenrod" fill="transparent"></path>
                 </svg>  -</p>
             </div>
-            <div class="slider">
                 <div class="sliderLabel">
                     <input id="waveform"type="range" min=0 max=3 step="1" list="waves" orient="vertical" value="0">
                     <label for="waveform">Waveform</label>
-                </div>
                 </div>
                 <div class="sliderTicks right">
                     <p>-</p>
@@ -52,99 +51,101 @@
                     <p>-</p>
                     <p>-</p>
                 </div>
+            </div>
                 
                 <!-- VOLUME SLIDER -->
+                <div class="slider">
                 <div class="sliderTicks left">
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                 </div>
-                <div class="slider">
                     <div class="sliderLabel">
                         <input id="volume"type="range" min=0 max=1 step="0.01" orient="vertical" value="0.5">
                         <label for="volume">Volume</label>
                     </div>
-                    </div>
                     <div class="sliderTicks right">
                         <p>-</p>
                         <p>-</p>
                         <p>-</p>
                         <p>-</p>
                     </div>
+                </div>
 
                     <!-- FILTER SLIDER -->
+                    <div class="slider">
                 <div class="sliderTicks left">
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                 </div>
-                <div class="slider">
                     <div class="sliderLabel">
                         <input id="filter"type="range" min=0 max=5000 step=1 orient="vertical" value=1000>
                         <label for="filter">Filter</label>
                     </div>
-                    </div>
                     <div class="sliderTicks right">
                         <p>-</p>
                         <p>-</p>
                         <p>-</p>
                         <p>-</p>
                     </div>
-
-                       <!-- LFO  SELECTOR-->
-                <div class="sliderTicks left">
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
                 </div>
+                    
+                <!-- LFO CONTAINER  -->
+                <div class="lfoContainer">
+                <!-- LFO  SELECTOR-->
                 <div class="slider">
+                <div class="sliderTicks left lfoSel">
+                    <p>Freq  -</p>
+                    <p>Filt  -</p>
+                    <p>Vol   -</p>
+                    <p>Off   -</p>
+                </div>
                     <div class="sliderLabel">
-                        <input id="lfo"type="range" min=0 max=5000 step=1 orient="vertical" value=1000>
+                        <input id="lfo"type="range" min=0 max=3 step=1 orient="vertical" value=0>
                         <label for="lfo">LFO</label>
                     </div>
-                    </div>
-                    <div class="sliderTicks right">
+                    <div class="sliderTicks right lfoSel">
                         <p>-</p>
                         <p>-</p>
                         <p>-</p>
                         <p>-</p>
                     </div>
+                </div>
 
                     <!-- LFO INTENSITY -->
+                    <div class="slider">
                 <div class="sliderTicks left">
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                 </div>
-                <div class="slider">
                     <div class="sliderLabel">
                         <input id="intensity"type="range" min=0 max=5000 step=1 orient="vertical" value=1000>
                         <label for="intensity">intensity</label>
                     </div>
-                    </div>
                     <div class="sliderTicks right">
                         <p>-</p>
                         <p>-</p>
                         <p>-</p>
                         <p>-</p>
                     </div>
+                </div>
 
                     <!-- LFO FREQUENCY -->
+                    <div class="slider">
                 <div class="sliderTicks left">
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                     <p>-</p>
                 </div>
-                <div class="slider">
                     <div class="sliderLabel">
                         <input id="frequency"type="range" min=0 max=5000 step=1 orient="vertical" value=1000>
                         <label for="frequency">Frequency</label>
-                    </div>
                     </div>
                     <div class="sliderTicks right">
                         <p>-</p>
@@ -152,7 +153,9 @@
                         <p>-</p>
                         <p>-</p>
                     </div>
-
+                </div>
+            </div>
+                
             </div>
             
             <!-- <datalist id="waves">

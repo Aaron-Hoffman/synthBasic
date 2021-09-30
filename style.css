@@ -31,7 +31,7 @@ p {
     color: palegoldenrod;
     margin: 0;
     line-height: 7.5px;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
 }
 
@@ -51,9 +51,6 @@ input::-moz-range-track {
     border-left: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-input::-moz-range-progres {
-}
-
 input::-moz-range-thumb {
     background-color: black;
     border:1px solid rgba(255, 255, 255, 0.5);
@@ -69,12 +66,16 @@ input::-moz-range-thumb {
     padding: 30px 0;
     background: radial-gradient(#555, #222);
     display: flex;
+    flex-wrap: wrap;
     padding: 40px;
     border-radius: 5px 5px 0 0 ;
 }
 
 .slider {
     display: flex;
+    justify-content: space-around;
+    padding: ;
+    width: 100px;
 }
 
 .sliderLabel {
@@ -92,11 +93,23 @@ input::-moz-range-thumb {
 }
 
 .left {
-    left: 20px;
+    left: 10px;
+}
+
+.lfoSel {
+    left: 0;
+    right: 0;
 }
 
 .right {
-    right: 20px;
+    right: 10px;
+}
+
+.lfoContainer {
+    border: 1px solid palegoldenrod;
+    display: flex;
+    padding: 10px;
+    margin-top: 10px;
 }
 
 .keyboard {
