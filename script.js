@@ -51,6 +51,7 @@ synth.runLfo = (oscillator=null) => {
     const speed = 1.01 - synth.lfoSpeed;
     switch (synth.lfoType) {
         case 'volume':
+            if (synth.currentInterval) clearInterval(synth.currentInterval)
             synth.currentInterval = setInterval(() => {
                 synth.gainNode.gain.linearRampToValueAtTime(synth.volume - (synth.volume * synth.lfoDepth), synth.audioContext.currentTime + speed)
                 setTimeout(() => {
@@ -59,6 +60,7 @@ synth.runLfo = (oscillator=null) => {
             }, speed * 2000)
             break;
         case 'filter':
+            if (synth.currentInterval) clearInterval(synth.currentInterval)
             synth.currentInterval = setInterval(() => {
                 synth.filterNode.frequency.linearRampToValueAtTime(synth.filterFrequency - (synth.filterFrequency * synth.lfoDepth), synth.audioContext.currentTime + speed)
                 setTimeout(() => {
@@ -66,33 +68,30 @@ synth.runLfo = (oscillator=null) => {
                 }, speed * 1000)
             }, speed * 2000);
             break;
-            case 'frequency':
-                if (oscillator){
-                    console.log('running')
-                    const frequencyToGoTo = (oscillator.frequency.value - (100 * synth.lfoDepth)).toFixed(2);
-                    console.log(oscillator.frequency, synth.lfoDepth)
-                    console.log(frequencyToGoTo);
-                    synth.currentInterval = setInterval(() => {
-                        oscillator.frequency.linearRampToValueAtTime(frequencyToGoTo , synth.audioContext.currentTime + speed)
-                        setTimeout(() => {
-                            synth.gainNode.gain.linearRampToValueAtTime(oscillator.frequency.value, synth.audioContext.currentTime + speed)
-                        }, speed * 1000)
-                    }, speed * 2000);
-                }
-                break;
+        case 'frequency':
+            if (oscillator){
+                console.log('running')
+                const frequencyToGoTo = (oscillator.frequency.value - (100 * synth.lfoDepth)).toFixed(2);
+                console.log(oscillator.frequency, synth.lfoDepth)
+                console.log(frequencyToGoTo);
+                if (synth.currentInterval) clearInterval(synth.currentInterval)
+                synth.currentInterval = setInterval(() => {
+                    oscillator.frequency.linearRampToValueAtTime(frequencyToGoTo , synth.audioContext.currentTime + speed)
+                    setTimeout(() => {
+                        synth.gainNode.gain.linearRampToValueAtTime(oscillator.frequency.value, synth.audioContext.currentTime + speed)
+                    }, speed * 1000)
+                }, speed * 2000);
+            }
+            break;
         default:
             break;
     }
 }
 
-
-    // synth.lfoSelector.addEventListener('input', () => clearInterval(currentInterval))
-
 // LFO Selector 
 synth.lfoSelector = document.querySelector('#lfo');
 synth.lfoType = synth.lfoOptions[synth.lfoSelector.value];
 synth.lfoSelector.addEventListener('input', () => {
-    clearInterval(synth.currentInterval);
     synth.lfoType = synth.lfoOptions[synth.lfoSelector.value];
     if (synth.lfoType) synth.runLfo();
 })
@@ -100,7 +99,6 @@ synth.lfoSelector.addEventListener('input', () => {
 synth.depthSlider = document.querySelector('#depth');
 synth.lfoDepth = synth.depthSlider.value;
 synth.depthSlider.addEventListener('input', () => {
-    clearInterval(synth.currentInterval);
     synth.lfoDepth = synth.depthSlider.value;
     if (synth.lfoType) synth.runLfo();
 })
@@ -108,7 +106,6 @@ synth.depthSlider.addEventListener('input', () => {
 synth.speedSlider = document.querySelector('#speed');
 synth.lfoSpeed = synth.speedSlider.value;
 synth.speedSlider.addEventListener('input', () => {
-    clearInterval(synth.currentInterval);
     synth.lfoSpeed = synth.speedSlider.value;
     if (synth.lfoType) synth.runLfo();
 })
